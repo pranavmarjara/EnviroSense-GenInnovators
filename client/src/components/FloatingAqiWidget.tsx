@@ -1,96 +1,67 @@
 import { useState, useEffect } from "react";
-import { useAqi } from "@/hooks/use-aqi";
-import { Wind, Loader2 } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { motion, AnimatePresence } from "framer-motion";
+import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Wind, Info } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export function FloatingAqiWidget() {
-  const [zip, setZip] = useState<string>("");
-  const [debouncedZip, setDebouncedZip] = useState<string>("");
-  const [isOpen, setIsOpen] = useState(false);
+  const [aqi, setAqi] = useState<number | null>(null);
+  const [status, setStatus] = useState<string>("Loading...");
+  const [color, setColor] = useState<string>("bg-gray-500");
 
-  // Simple debounce
   useEffect(() => {
-    const timer = setTimeout(() => setDebouncedZip(zip), 500);
+    // Simulated AQI data for the demonstration
+    // In a real app, this would fetch from an API like OpenWeather or AirVisual
+    const timer = setTimeout(() => {
+      const mockAqi = 42;
+      setAqi(mockAqi);
+      if (mockAqi <= 50) {
+        setStatus("Good");
+        setColor("bg-emerald-500");
+      } else if (mockAqi <= 100) {
+        setStatus("Moderate");
+        setColor("bg-yellow-500");
+      } else {
+        setStatus("Unhealthy");
+        setColor("bg-red-500");
+      }
+    }, 1000);
+
     return () => clearTimeout(timer);
-  }, [zip]);
-
-  const { data: aqi, isLoading, isError } = useAqi(debouncedZip);
-
-  // Auto-open when data is loaded
-  useEffect(() => {
-    if (aqi) setIsOpen(true);
-  }, [aqi]);
-
-  const getStatusColor = (category: string) => {
-    switch (category?.toLowerCase()) {
-      case 'good': return 'bg-emerald-500 text-white';
-      case 'moderate': return 'bg-yellow-500 text-white';
-      case 'poor': return 'bg-rose-500 text-white';
-      default: return 'bg-slate-500 text-white';
-    }
-  };
+  }, []);
 
   return (
-    <div className="fixed top-4 right-4 z-40 flex flex-col items-end gap-2">
-      <motion.div 
-        layout
-        className="bg-card/80 backdrop-blur-md border border-border shadow-xl rounded-full p-1 pl-4 flex items-center gap-2"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-      >
-        <Wind className="w-4 h-4 text-muted-foreground" />
-        <input 
-          type="text" 
-          placeholder="Zip Code" 
-          maxLength={5}
-          value={zip}
-          onChange={(e) => setZip(e.target.value.replace(/\D/g, ''))}
-          className="bg-transparent border-none outline-none w-20 text-sm font-medium placeholder:text-muted-foreground/50"
-        />
-        <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
-          {isLoading ? (
-            <Loader2 className="w-4 h-4 text-white animate-spin" />
-          ) : (
-            <span className="text-white text-xs font-bold">{aqi?.value || '-'}</span>
-          )}
-        </div>
-      </motion.div>
-
-      <AnimatePresence>
-        {isOpen && aqi && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 10 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 10 }}
-            className="bg-card border border-border shadow-2xl rounded-2xl p-4 w-64"
-          >
-            <div className="flex justify-between items-start mb-2">
-              <div>
-                <h4 className="text-sm font-semibold text-foreground">Current Air Quality</h4>
-                <p className="text-xs text-muted-foreground">Zip: {aqi.zip}</p>
+    <div className="fixed top-6 right-6 z-[100] pointer-events-auto">
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Card className="bg-[#0f2a20]/80 backdrop-blur-md border-[#1a3a2e] p-3 flex items-center gap-3 shadow-2xl hover:bg-[#1a3a2e]/90 transition-all duration-300 cursor-help">
+            <div className={`p-2 rounded-full ${color}/20 text-white`}>
+              <Wind className="w-4 h-4" />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-[10px] uppercase tracking-wider text-white/50 font-bold">AQI Display</span>
+              <div className="flex items-center gap-2">
+                <span className="text-xl font-bold text-white leading-none">
+                  {aqi !== null ? aqi : "--"}
+                </span>
+                <Badge variant="outline" className={`text-[10px] h-4 px-1.5 border-none ${color} text-white`}>
+                  {status}
+                </Badge>
               </div>
-              <button onClick={() => setIsOpen(false)} className="text-xs text-muted-foreground hover:text-foreground">
-                Close
-              </button>
             </div>
-            
-            <div className="flex items-center gap-3 mt-3">
-              <div className="flex-1 h-2 bg-secondary rounded-full overflow-hidden">
-                <div 
-                  className="h-full bg-primary transition-all duration-500" 
-                  style={{ width: `${Math.min((aqi.value / 300) * 100, 100)}%` }}
-                />
-              </div>
-              <span className="text-lg font-bold font-display">{aqi.value}</span>
-            </div>
-            
-            <div className={cn("mt-3 px-3 py-1.5 rounded-lg text-xs font-bold inline-block", getStatusColor(aqi.category))}>
-              {aqi.category}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </Card>
+        </TooltipTrigger>
+        <TooltipContent side="bottom" className="bg-[#0f2a20] border-[#1a3a2e] text-white">
+          <div className="flex items-center gap-2">
+            <Info className="w-3 h-3 text-primary" />
+            <p className="text-xs">Real-time Air Quality Index for your current area</p>
+          </div>
+        </TooltipContent>
+      </Tooltip>
     </div>
   );
 }
