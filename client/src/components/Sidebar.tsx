@@ -74,24 +74,24 @@ export function Sidebar() {
   }, []);
 
   const NavContent = ({ isCollapsed = false }: { isCollapsed?: boolean }) => (
-    <div className="flex flex-col h-full py-6 bg-[#0a1a14] border-r border-white/5">
+    <div className="flex flex-col h-full py-6 bg-[#030806] border-r border-white/5">
       <div className={cn("px-6 mb-10 flex items-center", isCollapsed ? "justify-center" : "justify-between")}>
         <div 
           className="flex items-center gap-2 cursor-pointer" 
           onClick={() => setCollapsed(!collapsed)}
           data-testid="button-toggle-sidebar"
         >
-          <div className="bg-primary/20 p-2 rounded-xl hover:bg-primary/30 transition-colors">
-            <Leaf className="w-6 h-6 text-primary" />
+          <div className="bg-solar-glow/20 p-2 rounded-xl hover:bg-solar-glow/30 transition-colors shadow-[0_0_15px_rgba(251,191,36,0.2)]">
+            <Leaf className="w-6 h-6 text-solar-glow" />
           </div>
           {!isCollapsed && (
-            <span className="text-xl font-display font-bold text-white tracking-tight">
+            <span className="text-xl font-display font-bold text-white tracking-tight solar-glow-text">
               ZUBOX
             </span>
           )}
         </div>
         {!isCollapsed && (
-          <Button size="icon" variant="ghost" className="text-white/50 hover:text-white">
+          <Button size="icon" variant="ghost" className="text-white/50 hover:text-white solar-glow-text">
             <Search className="w-5 h-5" />
           </Button>
         )}
@@ -111,12 +111,12 @@ export function Sidebar() {
               {isActive && (
                 <motion.div
                   layoutId="activeNav"
-                  className="absolute inset-0 bg-white/5 backdrop-blur-md rounded-2xl"
+                  className="absolute inset-0 bg-white/5 backdrop-blur-md rounded-2xl solar-gradient-border"
                   initial={false}
                   transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 />
               )}
-              <item.icon className={cn("w-5 h-5 z-10 transition-colors", isActive ? "text-primary" : "text-white/40 group-hover:text-primary")} />
+              <item.icon className={cn("w-5 h-5 z-10 transition-colors", isActive ? "text-solar-glow drop-shadow-[0_0_8px_rgba(251,191,36,0.5)]" : "text-white/40 group-hover:text-solar-glow")} />
               {!isCollapsed && <span className="font-medium z-10">{item.label}</span>}
             </Link>
           );
@@ -125,10 +125,10 @@ export function Sidebar() {
 
       {!isCollapsed && (
         <div className="px-6 pt-6 border-t border-white/5 mt-auto">
-          <div className="relative group overflow-hidden rounded-2xl p-4 transition-all duration-500 hover:scale-[1.02]">
-             <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent opacity-50 group-hover:opacity-100 transition-opacity" />
+          <div className="relative group overflow-hidden rounded-2xl p-4 transition-all duration-500 hover:scale-[1.02] solar-card solar-gradient-border">
+             <div className="absolute inset-0 bg-gradient-to-br from-solar-glow/10 to-transparent opacity-50 group-hover:opacity-100 transition-opacity" />
              <div className="relative z-10">
-               <p className="text-sm font-display font-bold text-white opacity-90">Daily Tip</p>
+               <p className="text-sm font-display font-bold text-solar-glow opacity-90">Daily Tip</p>
                <p className="text-xs mt-2 text-white/60 leading-relaxed">{dailyTip}</p>
              </div>
           </div>
