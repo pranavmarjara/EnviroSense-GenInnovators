@@ -51,7 +51,7 @@ function CircularGauge({ value, label }: { value: number; label: string }) {
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-8">
         <div className="flex flex-col items-center justify-center gap-1">
-          <span className="text-[10px] md:text-xs uppercase tracking-widest text-white/40 mb-2">Recommended Panels</span>
+          <span className="text-[10px] md:text-xs uppercase tracking-widest text-white/80 mb-2 drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">Recommended Panels</span>
           <span className="text-5xl md:text-6xl font-bold solar-glow-text leading-none">5</span>
           <div className="h-px w-8 bg-white/10 my-2" />
           <span className="text-3xl md:text-4xl font-bold solar-glow-text leading-none">{value}%</span>
