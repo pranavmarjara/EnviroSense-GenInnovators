@@ -13,28 +13,28 @@ import { Slider } from "@/components/ui/slider";
 import { cn } from "@/lib/utils";
 
 function CircularGauge({ value, label }: { value: number; label: string }) {
-  const radius = 80;
+  const radius = 90;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference - (value / 100) * circumference;
 
   return (
-    <div className="relative flex items-center justify-center w-64 h-64">
+    <div className="relative flex items-center justify-center w-72 h-72 md:w-80 md:h-80">
       <svg className="w-full h-full transform -rotate-90">
         <circle
-          cx="128"
-          cy="128"
+          cx="50%"
+          cy="50%"
           r={radius}
           stroke="currentColor"
-          strokeWidth="12"
+          strokeWidth="8"
           fill="transparent"
           className="text-white/5"
         />
         <motion.circle
-          cx="128"
-          cy="128"
+          cx="50%"
+          cy="50%"
           r={radius}
           stroke="url(#gaugeGradient)"
-          strokeWidth="12"
+          strokeWidth="8"
           fill="transparent"
           strokeDasharray={circumference}
           initial={{ strokeDashoffset: circumference }}
@@ -49,17 +49,20 @@ function CircularGauge({ value, label }: { value: number; label: string }) {
           </linearGradient>
         </defs>
       </svg>
-      <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-        <span className="text-sm text-white/60 mb-1">Recommended Panels:</span>
-        <span className="text-6xl font-bold solar-glow-text">5</span>
-        <div className="mt-2">
-          <span className="text-4xl font-bold solar-glow-text">{value}%</span>
+      <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-8">
+        <div className="flex flex-col items-center justify-center gap-1">
+          <span className="text-[10px] md:text-xs uppercase tracking-widest text-white/40 mb-2">Recommended Panels</span>
+          <span className="text-5xl md:text-6xl font-bold solar-glow-text leading-none">5</span>
+          <div className="h-px w-8 bg-white/10 my-2" />
+          <span className="text-3xl md:text-4xl font-bold solar-glow-text leading-none">{value}%</span>
+          <span className="text-[10px] md:text-xs text-white/40 mt-3 max-w-[140px] leading-tight uppercase tracking-wider">
+            {label}
+          </span>
         </div>
-        <span className="text-sm text-white/60 mt-1 max-w-[120px]">{label}</span>
       </div>
       
-      {/* Decorative particles/glow */}
-      <div className="absolute inset-0 bg-gradient-to-tr from-solar-glow/10 to-transparent rounded-full blur-3xl -z-10" />
+      {/* Decorative background glow */}
+      <div className="absolute inset-0 bg-gradient-to-tr from-solar-glow/5 to-transparent rounded-full blur-3xl -z-10" />
     </div>
   );
 }
