@@ -105,37 +105,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Testimonial Card */}
         <div className="lg:col-span-4 flex flex-col gap-8">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.7 }}
-            className="bg-white p-10 rounded-[3rem] text-[#0a1a14] shadow-2xl relative overflow-hidden group flex flex-col items-center text-center h-full min-h-[450px] justify-center"
-          >
-            <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity">
-              <Leaf className="w-32 h-32 rotate-45" />
-            </div>
-
-            <Avatar className="w-24 h-24 mb-8 border-4 border-[#0a1a14]/5 shadow-xl">
-              <AvatarImage src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200&auto=format&fit=crop" />
-              <AvatarFallback>SM</AvatarFallback>
-            </Avatar>
-            
-            <div className="flex gap-1.5 mb-4">
-              {[1, 2, 3, 4, 5].map((i) => (
-                <Star key={i} className="w-5 h-5 fill-[#0a1a14] text-[#0a1a14]" />
-              ))}
-            </div>
-            
-            <h4 className="text-2xl font-display font-bold mb-1">Scarlett Miles</h4>
-            <p className="text-xs text-[#0a1a14]/40 font-bold uppercase tracking-widest mb-8">Trip date: Jan 16, 2026</p>
-            
-            <p className="text-lg leading-relaxed text-[#0a1a14]/80 font-medium italic">
-              "The journey I got with Zubox was an absolutely unique experience, something I'd never tried before. Comfortable lodge, quiet environment, no vehicles."
-            </p>
-          </motion.div>
-
           <div className="bg-[#0a1a14] rounded-[3rem] p-10 border border-white/5 flex flex-col justify-center items-center text-center group cursor-pointer hover:bg-white/5 transition-all duration-500 hover:scale-[0.98]">
             <div className="w-20 h-20 rounded-full bg-white/5 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform border border-white/10">
               <ArrowRight className="w-10 h-10 text-white/30 group-hover:text-primary transition-colors" />
