@@ -25,37 +25,46 @@ export function Sidebar() {
   const [open, setOpen] = useState(false);
 
   const NavContent = () => (
-    <div className="flex flex-col h-full py-4 space-y-8">
-      <div className="px-6 flex items-center gap-2">
-        <div className="bg-primary/10 p-2 rounded-lg">
+    <div className="flex flex-col h-full py-6 space-y-8 bg-background/80 backdrop-blur-xl">
+      <div className="px-6 flex items-center gap-3">
+        <div className="bg-primary/20 p-2.5 rounded-2xl shadow-inner shadow-primary/20">
           <Leaf className="w-6 h-6 text-primary" />
         </div>
-        <span className="text-xl font-display font-bold text-foreground">
-          EnviroSense
+        <span className="text-2xl font-display font-bold text-foreground tracking-tight">
+          Zubox
         </span>
       </div>
       
-      <nav className="flex-1 px-3 space-y-1">
+      <nav className="flex-1 px-4 space-y-1.5">
         {NAV_ITEMS.map((item) => {
           const isActive = location === item.href;
           return (
             <Link key={item.href} href={item.href} className={cn(
-              "flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-200 group",
+              "flex items-center gap-3.5 px-4 py-3.5 rounded-2xl transition-all duration-300 group relative",
               isActive 
-                ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20" 
-                : "text-muted-foreground hover:bg-secondary hover:text-foreground"
+                ? "bg-primary/10 text-primary shadow-sm border border-primary/20" 
+                : "text-muted-foreground hover:bg-secondary/50 hover:text-foreground"
             )} onClick={() => setOpen(false)}>
-              <item.icon className={cn("w-5 h-5", isActive ? "text-current" : "text-muted-foreground group-hover:text-primary")} />
-              <span className="font-medium">{item.label}</span>
+              {isActive && (
+                <motion.div 
+                  layoutId="activeNav"
+                  className="absolute inset-0 bg-primary/5 rounded-2xl -z-10"
+                />
+              )}
+              <item.icon className={cn("w-5 h-5 transition-colors", isActive ? "text-primary" : "text-muted-foreground group-hover:text-primary")} />
+              <span className="font-semibold tracking-wide">{item.label}</span>
             </Link>
           );
         })}
       </nav>
 
       <div className="px-6 pb-6">
-        <div className="bg-gradient-to-br from-primary to-primary/80 rounded-2xl p-4 text-primary-foreground shadow-xl">
-          <p className="text-sm font-medium opacity-90">Daily Tip</p>
-          <p className="text-xs mt-1 leading-relaxed">Reducing meat consumption by 1 day a week saves 1,100 gallons of water.</p>
+        <div className="bg-gradient-to-br from-primary/20 to-secondary/30 border border-primary/20 rounded-3xl p-5 text-foreground shadow-2xl shadow-primary/5">
+          <div className="flex items-center gap-2 mb-2">
+            <div className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+            <p className="text-xs font-bold uppercase tracking-widest text-primary">Daily Wisdom</p>
+          </div>
+          <p className="text-sm leading-relaxed font-medium opacity-90">Reducing meat consumption by 1 day a week saves 1,100 gallons of water.</p>
         </div>
       </div>
     </div>
@@ -64,7 +73,7 @@ export function Sidebar() {
   return (
     <>
       {/* Desktop Sidebar */}
-      <aside className="hidden md:flex w-64 flex-col fixed inset-y-0 z-30 bg-background border-r border-border/50">
+      <aside className="hidden md:flex w-64 flex-col fixed inset-y-0 z-30 bg-background border-r border-border/10">
         <NavContent />
       </aside>
 

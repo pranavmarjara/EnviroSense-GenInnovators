@@ -8,28 +8,28 @@
   --font-body: 'DM Sans', sans-serif;
   --font-display: 'Outfit', sans-serif;
 
-  /* Nature-inspired palette: Emerald/Forest Greens, Creamy Backgrounds, Earthy Accents */
-  --background: 120 20% 99%;
-  --foreground: 160 40% 10%; /* Dark green-grey */
+  /* Nature-inspired palette: Deep Forest Greens, Dark Backgrounds */
+  --background: 160 40% 5%;
+  --foreground: 140 20% 95%;
 
-  --primary: 142 76% 36%; /* Emerald Green */
-  --primary-foreground: 355 100% 98%;
+  --primary: 142 70% 45%; /* Vibrant Nature Green */
+  --primary-foreground: 140 10% 5%;
 
-  --secondary: 146 35% 92%; /* Light Mint */
-  --secondary-foreground: 160 40% 20%;
+  --secondary: 160 30% 15%; /* Deep Moss */
+  --secondary-foreground: 140 20% 90%;
 
-  --muted: 80 20% 96%;
-  --muted-foreground: 160 10% 40%;
+  --muted: 160 30% 12%;
+  --muted-foreground: 140 15% 70%;
 
-  --accent: 35 90% 65%; /* Warm Sunny Yellow/Orange */
-  --accent-foreground: 35 100% 15%;
+  --accent: 35 90% 60%; /* Warm Glow */
+  --accent-foreground: 35 100% 10%;
 
-  --destructive: 0 84% 60%;
+  --destructive: 0 62% 30%;
   --destructive-foreground: 210 40% 98%;
 
-  --border: 146 20% 90%;
-  --input: 146 20% 90%;
-  --ring: 142 76% 36%;
+  --border: 160 20% 20%;
+  --input: 160 20% 20%;
+  --ring: 142 70% 45%;
 
   --radius: 1rem;
 }
