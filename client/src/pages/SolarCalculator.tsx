@@ -60,7 +60,7 @@ function CircularGauge({ value, label }: { value: number; label: string }) {
       
       {/* Label below the circle */}
       <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-full text-center">
-        <span className="text-[10px] md:text-xs text-white/40 leading-tight uppercase tracking-wider block max-w-[200px] mx-auto">
+        <span className="text-[10px] md:text-xs text-white/80 leading-tight uppercase tracking-wider block max-w-[200px] mx-auto drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">
           {label}
         </span>
       </div>
