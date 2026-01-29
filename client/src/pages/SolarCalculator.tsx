@@ -55,10 +55,14 @@ function CircularGauge({ value, label }: { value: number; label: string }) {
           <span className="text-5xl md:text-6xl font-bold solar-glow-text leading-none">5</span>
           <div className="h-px w-8 bg-white/10 my-2" />
           <span className="text-3xl md:text-4xl font-bold solar-glow-text leading-none">{value}%</span>
-          <span className="text-[10px] md:text-xs text-white/40 mt-6 max-w-[140px] leading-tight uppercase tracking-wider">
-            {label}
-          </span>
         </div>
+      </div>
+      
+      {/* Label below the circle */}
+      <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 w-full text-center">
+        <span className="text-[10px] md:text-xs text-white/40 leading-tight uppercase tracking-wider block max-w-[200px] mx-auto">
+          {label}
+        </span>
       </div>
       
       {/* Decorative background glow */}
