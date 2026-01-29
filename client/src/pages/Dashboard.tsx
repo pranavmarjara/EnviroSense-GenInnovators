@@ -1,141 +1,147 @@
-import { PageHeader } from "@/components/PageHeader";
 import { Link } from "wouter";
-import { ArrowRight, Leaf, Sun, BarChart3, CloudRain } from "lucide-react";
+import { ArrowRight, Leaf, Sun, BarChart3, Star } from "lucide-react";
 import { motion } from "framer-motion";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const CARDS = [
   {
-    title: "Plant Recommender",
-    description: "Find the perfect flora for your local ecosystem.",
+    title: "Unique experience",
+    description: "We will show you the wonders of nature from an uncommon perspective.",
     href: "/plants",
     icon: Leaf,
-    color: "bg-emerald-500",
-    gradient: "from-emerald-500/20 to-emerald-500/5"
+    id: "01"
   },
   {
-    title: "Solar Calculator",
-    description: "Analyze potential savings from solar energy.",
+    title: "Comfortable setting",
+    description: "Luxury eco-lodges designed for harmony and complete unity.",
     href: "/solar",
     icon: Sun,
-    color: "bg-amber-500",
-    gradient: "from-amber-500/20 to-amber-500/5"
+    id: "02"
   },
   {
-    title: "Brand Impact",
-    description: "Check the eco-score of major corporations.",
+    title: "Vehicle free zone",
+    description: "Pure environment with no vehicles, just peaceful serene atmosphere.",
     href: "/brands",
     icon: BarChart3,
-    color: "bg-blue-500",
-    gradient: "from-blue-500/20 to-blue-500/5"
-  },
-  {
-    title: "Heat Map",
-    description: "Visualize temperature zones in your region.",
-    href: "/heat-map",
-    icon: CloudRain,
-    color: "bg-rose-500",
-    gradient: "from-rose-500/20 to-rose-500/5"
+    id: "03"
   }
 ];
 
 export default function Dashboard() {
   return (
-    <div className="max-w-7xl mx-auto space-y-12">
-      <section className="relative rounded-[2.5rem] overflow-hidden min-h-[500px] flex flex-col justify-end p-8 md:p-16 border border-white/10 shadow-2xl">
+    <div className="w-full h-full space-y-12">
+      {/* Hero Section */}
+      <motion.section 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="relative rounded-[3rem] overflow-hidden min-h-[70vh] flex flex-col justify-end p-12 md:p-20 shadow-2xl border border-white/5 group"
+      >
         <div 
-          className="absolute inset-0 z-0"
+          className="absolute inset-0 z-0 transition-transform duration-1000 group-hover:scale-105"
           style={{
             backgroundImage: 'url("/images/hero-nature.png")',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
         >
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0a1a14] via-[#0a1a14]/20 to-transparent" />
         </div>
 
-        <div className="relative z-10 max-w-2xl">
+        <div className="relative z-10 max-w-3xl">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <span className="inline-block px-4 py-1.5 rounded-full bg-primary/20 text-primary text-xs font-bold uppercase tracking-[0.2em] mb-6 backdrop-blur-md border border-primary/20">
-              Sustainable Living
+            <span className="inline-block text-white/50 text-xs font-bold uppercase tracking-[0.4em] mb-8">
+              ABOUT US
             </span>
-            <h1 className="text-5xl md:text-7xl font-display font-bold text-white mb-6 leading-[1.1] tracking-tight">
+            <h1 className="text-6xl md:text-9xl font-display font-bold text-white mb-10 leading-[0.85] tracking-tight">
               Get closer <br /> to nature
             </h1>
-            <p className="text-lg md:text-xl text-white/70 mb-8 leading-relaxed font-medium">
-              Monitor your environmental footprint and discover innovative ways to cultivate a sustainable lifestyle in harmony with the planet.
-            </p>
-            <Link href="/plants" className="inline-flex items-center px-8 py-4 bg-primary text-primary-foreground rounded-2xl font-bold hover:scale-105 transition-transform shadow-xl shadow-primary/20">
-              Explore Now <ArrowRight className="w-5 h-5 ml-2" />
+            <Link href="/plants" className="inline-flex items-center gap-3 text-white/80 hover:text-white transition-all group/link text-lg font-medium">
+              Check our values <ArrowRight className="w-5 h-5 transition-transform group-hover/link:translate-x-2" />
             </Link>
           </motion.div>
         </div>
-      </section>
+      </motion.section>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-        {CARDS.map((card, index) => (
-          <motion.div
-            key={card.title}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 + 0.5 }}
-          >
-            <Link href={card.href} className={`
-              group relative block h-full p-10 rounded-[2.5rem] overflow-hidden border border-white/5
-              bg-secondary/20 backdrop-blur-md hover:bg-secondary/30 hover:-translate-y-2 
-              transition-all duration-500
-            `}>
-              <div className={`
-                w-14 h-14 rounded-2xl flex items-center justify-center mb-8 
-                ${card.color} text-white shadow-xl shadow-black/20
-              `}>
-                <card.icon className="w-7 h-7" />
-              </div>
-              
-              <h3 className="text-3xl font-display font-bold text-foreground mb-4 tracking-tight">
-                {card.title}
-              </h3>
-              <p className="text-muted-foreground text-lg mb-10 leading-relaxed opacity-80 group-hover:opacity-100 transition-opacity">
-                {card.description}
+      {/* Features Section */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 px-4">
+        <div className="lg:col-span-8">
+          <div className="mb-16">
+            <span className="text-primary text-xs font-bold uppercase tracking-[0.4em] mb-6 block">FEATURES</span>
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-12">
+              <h2 className="text-5xl md:text-6xl font-display font-bold text-white leading-[1.1] tracking-tight max-w-xl">
+                We make nature accessible
+              </h2>
+              <p className="text-white/40 max-w-[280px] text-base leading-relaxed font-medium">
+                Welcome to the world of impressive beauty, harmony, and respect to nature.
               </p>
-
-              <div className="absolute bottom-10 right-10 w-12 h-12 rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 flex items-center justify-center group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-all duration-500">
-                <ArrowRight className="w-6 h-6" />
-              </div>
-            </Link>
-          </motion.div>
-        ))}
-      </div>
-
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1 }}
-        className="bg-secondary/10 backdrop-blur-xl rounded-[2.5rem] p-10 border border-white/5 shadow-inner"
-      >
-        <div className="flex flex-col md:flex-row items-center gap-10">
-          <div className="w-full md:w-48 h-48 rounded-[2rem] overflow-hidden flex-shrink-0 shadow-2xl rotate-3 group hover:rotate-0 transition-transform duration-500">
-            <img 
-              src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&q=80&w=1000" 
-              alt="Nature conservation" 
-              className="w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-500"
-            />
+            </div>
           </div>
-          <div className="flex-1 text-center md:text-left">
-            <h3 className="text-3xl font-display font-bold mb-4 tracking-tight">Eco Insight</h3>
-            <p className="text-muted-foreground text-lg leading-relaxed max-w-3xl opacity-90">
-              Planting a single tree can absorb up to 48 pounds of carbon dioxide per year. By utilizing our 
-              Plant Recommender, you can find the most effective species for your specific climate zone to maximize this impact.
-            </p>
-            <Link href="/plants" className="inline-flex items-center text-primary text-lg font-bold mt-8 hover:gap-3 transition-all">
-              Start Your Journey <ArrowRight className="w-5 h-5 ml-2" />
-            </Link>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {CARDS.map((card, index) => (
+              <motion.div
+                key={card.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 + index * 0.1 }}
+              >
+                <Link href={card.href} className="group block h-full p-10 rounded-[2.5rem] bg-white/5 border border-white/5 hover:bg-white/10 transition-all duration-500 hover:-translate-y-2">
+                  <span className="text-primary font-display text-2xl font-bold mb-8 block">{card.id}</span>
+                  <h3 className="text-2xl font-display font-bold text-white mb-4 group-hover:text-primary transition-colors">
+                    {card.title}
+                  </h3>
+                  <p className="text-white/40 text-base leading-relaxed">
+                    {card.description}
+                  </p>
+                </Link>
+              </motion.div>
+            ))}
           </div>
         </div>
-      </motion.div>
+
+        {/* Testimonial Card */}
+        <div className="lg:col-span-4 flex flex-col gap-8">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.7 }}
+            className="bg-white p-10 rounded-[3rem] text-[#0a1a14] shadow-2xl relative overflow-hidden group flex flex-col items-center text-center h-full min-h-[450px] justify-center"
+          >
+            <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity">
+              <Leaf className="w-32 h-32 rotate-45" />
+            </div>
+
+            <Avatar className="w-24 h-24 mb-8 border-4 border-[#0a1a14]/5 shadow-xl">
+              <AvatarImage src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200&auto=format&fit=crop" />
+              <AvatarFallback>SM</AvatarFallback>
+            </Avatar>
+            
+            <div className="flex gap-1.5 mb-4">
+              {[1, 2, 3, 4, 5].map((i) => (
+                <Star key={i} className="w-5 h-5 fill-[#0a1a14] text-[#0a1a14]" />
+              ))}
+            </div>
+            
+            <h4 className="text-2xl font-display font-bold mb-1">Scarlett Miles</h4>
+            <p className="text-xs text-[#0a1a14]/40 font-bold uppercase tracking-widest mb-8">Trip date: Jan 16, 2026</p>
+            
+            <p className="text-lg leading-relaxed text-[#0a1a14]/80 font-medium italic">
+              "The journey I got with Zubox was an absolutely unique experience, something I'd never tried before. Comfortable lodge, quiet environment, no vehicles."
+            </p>
+          </motion.div>
+
+          <div className="bg-[#0a1a14] rounded-[3rem] p-10 border border-white/5 flex flex-col justify-center items-center text-center group cursor-pointer hover:bg-white/5 transition-all duration-500 hover:scale-[0.98]">
+            <div className="w-20 h-20 rounded-full bg-white/5 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform border border-white/10">
+              <ArrowRight className="w-10 h-10 text-white/30 group-hover:text-primary transition-colors" />
+            </div>
+            <p className="text-white/60 text-lg font-bold tracking-tight">Explore more stories</p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
