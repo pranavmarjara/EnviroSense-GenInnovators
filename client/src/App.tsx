@@ -31,7 +31,8 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <div className="flex min-h-screen bg-[#0a1a14] text-white font-body selection:bg-primary/20 overflow-x-hidden">
+        <div className="flex min-h-screen bg-[#0a1a14] text-white font-body selection:bg-primary/20 overflow-x-hidden relative">
+          <FloatingAqiWidget />
           <Sidebar />
           
           <main className="flex-1 md:ml-72 relative z-10">
