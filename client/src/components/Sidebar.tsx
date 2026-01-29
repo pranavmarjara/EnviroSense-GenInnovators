@@ -8,7 +8,7 @@ import {
   Menu,
   Search
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useMemo, createContext, useContext } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -22,24 +22,79 @@ const NAV_ITEMS = [
   { href: "/brands", label: "Brand Impact", icon: ShoppingBag },
 ];
 
+const DAILY_TIPS = [
+  "Switching off unused lights can reduce household electricity use by up to 10%.",
+  "Using public transport once a week can significantly lower your carbon footprint.",
+  "Reducing meat consumption by one day a week can save over 1,000 gallons of water.",
+  "Carrying a reusable water bottle helps cut down plastic waste.",
+  "Planting native trees improves air quality and supports local biodiversity.",
+  "Shorter showers can save hundreds of litres of water every month.",
+  "Air-drying clothes instead of using a dryer saves energy and extends fabric life.",
+  "Segregating waste at home improves recycling efficiency and reduces landfill load.",
+  "Using LED bulbs consumes up to 75% less energy than traditional bulbs.",
+  "Walking or cycling short distances reduces air pollution and improves health.",
+  "Regular servicing of air conditioners improves efficiency and lowers power usage.",
+  "Reusing paper for rough work can significantly reduce paper waste.",
+  "Keeping indoor plants can help improve air quality naturally.",
+  "Buying products with minimal packaging reduces plastic pollution.",
+  "Turning off taps while brushing can save up to 6 litres of water per minute.",
+  "Supporting local produce reduces transportation emissions and supports farmers.",
+  "Composting kitchen waste turns organic waste into useful fertilizer.",
+  "Using solar energy reduces dependence on fossil fuels and lowers emissions.",
+  "Avoiding single-use plastics helps protect marine and wildlife ecosystems.",
+  "Setting air conditioners at 24-26C saves electricity and reduces emissions."
+];
+
+// Context for sharing collapsed state
+export const SidebarContext = createContext<{
+  collapsed: boolean;
+  setCollapsed: (collapsed: boolean) => void;
+}>({ collapsed: false, setCollapsed: () => {} });
+
+export function useSidebar() {
+  return useContext(SidebarContext);
+}
+
+export function SidebarProvider({ children }: { children: React.ReactNode }) {
+  const [collapsed, setCollapsed] = useState(false);
+  return (
+    <SidebarContext.Provider value={{ collapsed, setCollapsed }}>
+      {children}
+    </SidebarContext.Provider>
+  );
+}
+
 export function Sidebar() {
   const [location] = useLocation();
   const [open, setOpen] = useState(false);
+  const { collapsed, setCollapsed } = useSidebar();
 
-  const NavContent = () => (
+  const dailyTip = useMemo(() => {
+    return DAILY_TIPS[Math.floor(Math.random() * DAILY_TIPS.length)];
+  }, []);
+
+  const NavContent = ({ isCollapsed = false }: { isCollapsed?: boolean }) => (
     <div className="flex flex-col h-full py-6 bg-[#0a1a14] border-r border-white/5">
-      <div className="px-6 mb-10 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="bg-primary/20 p-2 rounded-xl">
+      <div className={cn("px-6 mb-10 flex items-center", isCollapsed ? "justify-center" : "justify-between")}>
+        <div 
+          className="flex items-center gap-2 cursor-pointer" 
+          onClick={() => setCollapsed(!collapsed)}
+          data-testid="button-toggle-sidebar"
+        >
+          <div className="bg-primary/20 p-2 rounded-xl hover:bg-primary/30 transition-colors">
             <Leaf className="w-6 h-6 text-primary" />
           </div>
-          <span className="text-xl font-display font-bold text-white tracking-tight">
-            ZUBOX
-          </span>
+          {!isCollapsed && (
+            <span className="text-xl font-display font-bold text-white tracking-tight">
+              ZUBOX
+            </span>
+          )}
         </div>
-        <Button size="icon" variant="ghost" className="text-white/50 hover:text-white">
-          <Search className="w-5 h-5" />
-        </Button>
+        {!isCollapsed && (
+          <Button size="icon" variant="ghost" className="text-white/50 hover:text-white">
+            <Search className="w-5 h-5" />
+          </Button>
+        )}
       </div>
       
       <nav className="flex-1 px-4 space-y-2">
@@ -48,6 +103,7 @@ export function Sidebar() {
           return (
             <Link key={item.href} href={item.href} className={cn(
               "relative flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-300 group overflow-hidden",
+              isCollapsed && "justify-center px-3",
               isActive 
                 ? "text-white" 
                 : "text-white/40 hover:text-white"
@@ -61,28 +117,35 @@ export function Sidebar() {
                 />
               )}
               <item.icon className={cn("w-5 h-5 z-10 transition-colors", isActive ? "text-primary" : "text-white/40 group-hover:text-primary")} />
-              <span className="font-medium z-10">{item.label}</span>
+              {!isCollapsed && <span className="font-medium z-10">{item.label}</span>}
             </Link>
           );
         })}
       </nav>
 
-      <div className="px-6 pt-6 border-t border-white/5 mt-auto">
-        <div className="relative group overflow-hidden rounded-2xl p-4 transition-all duration-500 hover:scale-[1.02]">
-           <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent opacity-50 group-hover:opacity-100 transition-opacity" />
-           <div className="relative z-10">
-             <p className="text-sm font-display font-bold text-white opacity-90">Daily Tip</p>
-             <p className="text-xs mt-2 text-white/60 leading-relaxed">Reducing meat consumption by 1 day a week saves 1,100 gallons of water.</p>
-           </div>
+      {!isCollapsed && (
+        <div className="px-6 pt-6 border-t border-white/5 mt-auto">
+          <div className="relative group overflow-hidden rounded-2xl p-4 transition-all duration-500 hover:scale-[1.02]">
+             <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent opacity-50 group-hover:opacity-100 transition-opacity" />
+             <div className="relative z-10">
+               <p className="text-sm font-display font-bold text-white opacity-90">Daily Tip</p>
+               <p className="text-xs mt-2 text-white/60 leading-relaxed">{dailyTip}</p>
+             </div>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 
   return (
     <>
-      <aside className="hidden md:flex w-72 flex-col fixed inset-y-0 z-30 shadow-2xl">
-        <NavContent />
+      <aside 
+        className={cn(
+          "hidden md:flex flex-col fixed inset-y-0 z-30 shadow-2xl transition-all duration-300",
+          collapsed ? "w-20" : "w-72"
+        )}
+      >
+        <NavContent isCollapsed={collapsed} />
       </aside>
 
       <div className="md:hidden fixed top-6 left-6 z-50">
@@ -93,7 +156,7 @@ export function Sidebar() {
             </Button>
           </SheetTrigger>
           <SheetContent side="left" className="p-0 w-80 border-none bg-transparent">
-            <NavContent />
+            <NavContent isCollapsed={false} />
           </SheetContent>
         </Sheet>
       </div>
