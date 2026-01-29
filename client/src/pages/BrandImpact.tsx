@@ -102,7 +102,7 @@ export default function BrandImpact() {
                     <span className="text-sm font-medium text-muted-foreground uppercase tracking-widest mt-1">Eco Score</span>
                  </div>
               </div>
-              <p className={`mt-4 font-medium px-4 py-1 rounded-full ${brand.score > 70 ? 'bg-emerald-100 text-emerald-700' : 'bg-orange-100 text-orange-700'}`}>
+              <p className={`mt-4 font-medium px-4 py-1 rounded-full ${brand.score > 70 ? 'bg-primary/20 text-primary' : 'bg-accent/20 text-accent'}`}>
                 {brand.ecoRating} Rating
               </p>
             </div>
@@ -113,10 +113,10 @@ export default function BrandImpact() {
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.1 }}
-                className="bg-white rounded-2xl p-6 border border-border shadow-sm"
+                className="bg-card rounded-2xl p-6 border border-border shadow-sm"
               >
                 <div className="flex items-center gap-4 mb-3">
-                  <div className="p-3 bg-blue-100 rounded-xl text-blue-600">
+                  <div className="p-3 bg-primary/20 rounded-xl text-primary">
                      <Recycle className="w-6 h-6" />
                   </div>
                   <div>
@@ -133,10 +133,10 @@ export default function BrandImpact() {
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.2 }}
-                className="bg-white rounded-2xl p-6 border border-border shadow-sm"
+                className="bg-card rounded-2xl p-6 border border-border shadow-sm"
               >
                 <div className="flex items-center gap-4 mb-3">
-                  <div className="p-3 bg-green-100 rounded-xl text-green-600">
+                  <div className="p-3 bg-primary/20 rounded-xl text-primary">
                      <Leaf className="w-6 h-6" />
                   </div>
                   <div>
