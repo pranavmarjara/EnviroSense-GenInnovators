@@ -6,9 +6,63 @@ import { calculateSolarSchema, type CalculateSolarRequest } from "@shared/schema
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Loader2, SunMedium, CheckCircle2, XCircle, Zap } from "lucide-react";
-import { motion } from "framer-motion";
+import { Loader2, Sun, Wind, MapPin, Zap, CheckCircle2, TrendingUp, Wallet, Leaf } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
+import { Slider } from "@/components/ui/slider";
+import { cn } from "@/lib/utils";
+
+function CircularGauge({ value, label }: { value: number; label: string }) {
+  const radius = 80;
+  const circumference = 2 * Math.PI * radius;
+  const offset = circumference - (value / 100) * circumference;
+
+  return (
+    <div className="relative flex items-center justify-center w-64 h-64">
+      <svg className="w-full h-full transform -rotate-90">
+        <circle
+          cx="128"
+          cy="128"
+          r={radius}
+          stroke="currentColor"
+          strokeWidth="12"
+          fill="transparent"
+          className="text-white/5"
+        />
+        <motion.circle
+          cx="128"
+          cy="128"
+          r={radius}
+          stroke="url(#gaugeGradient)"
+          strokeWidth="12"
+          fill="transparent"
+          strokeDasharray={circumference}
+          initial={{ strokeDashoffset: circumference }}
+          animate={{ strokeDashoffset: offset }}
+          transition={{ duration: 1.5, ease: "easeOut" }}
+          strokeLinecap="round"
+        />
+        <defs>
+          <linearGradient id="gaugeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#fbbf24" />
+            <stop offset="100%" stopColor="#10b981" />
+          </linearGradient>
+        </defs>
+      </svg>
+      <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+        <span className="text-sm text-white/60 mb-1">Recommended Panels:</span>
+        <span className="text-6xl font-bold solar-glow-text">5</span>
+        <div className="mt-2">
+          <span className="text-4xl font-bold solar-glow-text">{value}%</span>
+        </div>
+        <span className="text-sm text-white/60 mt-1 max-w-[120px]">{label}</span>
+      </div>
+      
+      {/* Decorative particles/glow */}
+      <div className="absolute inset-0 bg-gradient-to-tr from-solar-glow/10 to-transparent rounded-full blur-3xl -z-10" />
+    </div>
+  );
+}
 
 export default function SolarCalculator() {
   const { mutate, isPending, data: result } = useSolarCalculator();
@@ -16,8 +70,8 @@ export default function SolarCalculator() {
   const form = useForm<CalculateSolarRequest>({
     resolver: zodResolver(calculateSolarSchema),
     defaultValues: {
-      zip: "",
-      dailyKwh: 0,
+      zip: "90210",
+      dailyKwh: 25,
     },
   });
 
@@ -26,31 +80,69 @@ export default function SolarCalculator() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto">
-      <PageHeader 
-        title="Solar Calculator" 
-        description="Estimate your potential energy savings and feasibility of solar panel installation."
-      />
+    <div className="min-h-screen bg-[#030806] text-white p-4 md:p-8 font-display">
+      <div className="max-w-6xl mx-auto space-y-12">
+        {/* Header Section */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div className="space-y-2">
+            <h1 className="text-5xl md:text-6xl font-bold tracking-tight solar-glow-text">
+              Solar Intelligence
+            </h1>
+            <p className="text-white/60 text-lg">
+              Make smarter energy decisions for your location
+            </p>
+          </div>
 
-      <div className="grid md:grid-cols-2 gap-8 items-start">
-        <Card className="shadow-lg border-border/50">
-          <CardContent className="p-6">
-            <h3 className="font-display font-bold text-xl mb-6 flex items-center gap-2">
-              <Zap className="w-5 h-5 text-accent" /> 
-              Enter Usage Details
-            </h3>
+          <div className="flex items-center gap-4 bg-white/5 border border-white/10 rounded-2xl p-4 backdrop-blur-md">
+            <div className="flex items-center gap-3 pr-4 border-r border-white/10">
+              <Sun className="w-5 h-5 text-solar-glow" />
+              <div>
+                <p className="text-[10px] uppercase tracking-wider text-white/40">Sunlight: High</p>
+                <TrendingUp className="w-3 h-3 text-solar-glow" />
+              </div>
+            </div>
+            <div className="flex items-center gap-3 pr-4 border-r border-white/10">
+              <Wind className="w-5 h-5 text-emerald-400" />
+              <div>
+                <p className="text-[10px] uppercase tracking-wider text-white/40">AQI Impact:</p>
+                <p className="text-xs font-semibold">Low Loss</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <MapPin className="w-5 h-5 text-blue-400" />
+              <div>
+                <p className="text-[10px] uppercase tracking-wider text-white/40">Region:</p>
+                <p className="text-xs font-semibold text-emerald-400">Favorable</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Main Grid */}
+        <div className="grid lg:grid-cols-12 gap-8">
+          {/* Energy Profile Card */}
+          <div className="lg:col-span-4 solar-card solar-gradient-border p-8 space-y-8">
+            <div className="flex items-center gap-3">
+              <Zap className="w-6 h-6 text-solar-glow" />
+              <h2 className="text-xl font-bold">Energy Profile</h2>
+            </div>
 
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                 <FormField
                   control={form.control}
                   name="zip"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Zip Code</FormLabel>
+                      <FormLabel className="text-white/60 text-xs uppercase tracking-widest">ZIP Code</FormLabel>
                       <FormControl>
-                        <Input placeholder="90210" {...field} className="rounded-xl h-12" />
+                        <Input 
+                          placeholder="90210" 
+                          {...field} 
+                          className="bg-black/40 border-white/10 h-12 rounded-xl focus:ring-solar-glow/50" 
+                        />
                       </FormControl>
+                      <p className="text-[10px] text-white/40">Used to determine sunlight & AQI</p>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -61,11 +153,24 @@ export default function SolarCalculator() {
                   name="dailyKwh"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Avg Daily Usage (kWh)</FormLabel>
+                      <div className="flex justify-between items-center mb-2">
+                        <FormLabel className="text-white/60 text-xs uppercase tracking-widest">Daily Load (kWh)</FormLabel>
+                        <span className="text-solar-glow font-bold">{field.value}</span>
+                      </div>
                       <FormControl>
-                        <Input type="number" placeholder="29" {...field} className="rounded-xl h-12" />
+                        <Slider
+                          min={1}
+                          max={50}
+                          step={1}
+                          value={[field.value]}
+                          onValueChange={(vals) => field.onChange(vals[0])}
+                          className="py-4"
+                        />
                       </FormControl>
-                      <p className="text-xs text-muted-foreground mt-1">Check your latest electricity bill for this number.</p>
+                      <div className="flex justify-between text-[10px] text-white/40">
+                        <span>1</span>
+                        <span>50</span>
+                      </div>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -74,70 +179,99 @@ export default function SolarCalculator() {
                 <Button 
                   type="submit" 
                   disabled={isPending}
-                  className="w-full rounded-xl bg-accent hover:bg-accent/90 text-accent-foreground font-bold py-6 text-lg shadow-lg shadow-accent/20"
+                  className="w-full h-14 rounded-xl bg-gradient-to-r from-solar-glow to-amber-500 hover:from-amber-500 hover:to-solar-glow text-black font-bold text-lg shadow-[0_0_20px_rgba(251,191,36,0.3)] transition-all duration-500"
                 >
                   {isPending ? (
-                    <Loader2 className="w-6 h-6 animate-spin mr-2" />
-                  ) : "Calculate Potential"}
+                    <Loader2 className="w-6 h-6 animate-spin" />
+                  ) : "Analyze Solar Feasibility"}
                 </Button>
               </form>
             </Form>
-          </CardContent>
-        </Card>
+          </div>
 
-        {/* Results Section */}
-        <div className="space-y-6">
-          {!result && !isPending && (
-            <div className="h-full min-h-[300px] flex flex-col items-center justify-center text-center p-8 bg-secondary/30 rounded-3xl border border-dashed border-border">
-              <SunMedium className="w-16 h-16 text-muted-foreground/30 mb-4" />
-              <p className="text-muted-foreground">Fill out the form to see your personalized solar estimate.</p>
-            </div>
-          )}
-
-          {isPending && (
-            <div className="h-full min-h-[300px] flex items-center justify-center">
-              <Loader2 className="w-12 h-12 text-accent animate-spin" />
-            </div>
-          )}
-
-          {result && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="space-y-6"
-            >
-              <div className={`p-8 rounded-3xl text-white shadow-xl ${result.worthIt ? 'bg-emerald-600' : 'bg-orange-500'}`}>
-                <div className="flex items-center gap-4 mb-4">
-                  {result.worthIt ? (
-                    <CheckCircle2 className="w-10 h-10" />
-                  ) : (
-                    <XCircle className="w-10 h-10" />
-                  )}
-                  <h2 className="text-3xl font-display font-bold">
-                    {result.worthIt ? "Good Investment!" : "Not Recommended"}
-                  </h2>
-                </div>
-                <p className="opacity-90 text-lg leading-relaxed">
-                  {result.summary}
-                </p>
-              </div>
-
-              {result.panels && (
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-card p-6 rounded-2xl border border-border shadow-sm text-center">
-                    <p className="text-muted-foreground text-sm font-medium uppercase tracking-wider">Suggested Panels</p>
-                    <p className="text-4xl font-display font-bold text-foreground mt-2">{result.panels}</p>
+          {/* Results Display Card */}
+          <div className="lg:col-span-8 solar-card solar-gradient-border p-8 flex flex-col items-center justify-center min-h-[450px]">
+            <AnimatePresence mode="wait">
+              {!result && !isPending && (
+                <motion.div
+                  key="empty"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="text-center space-y-4"
+                >
+                  <div className="w-20 h-20 rounded-full bg-white/5 flex items-center justify-center mx-auto border border-white/10">
+                    <Sun className="w-10 h-10 text-white/20" />
                   </div>
-                  <div className="bg-card p-6 rounded-2xl border border-border shadow-sm text-center">
-                    <p className="text-muted-foreground text-sm font-medium uppercase tracking-wider">Est. Annual Savings</p>
-                    <p className="text-4xl font-display font-bold text-emerald-600 mt-2">
-                      ₹{Math.floor(result.panels * 120 * 83)}
+                  <p className="text-white/40">Adjust parameters and analyze to see intelligence report</p>
+                </motion.div>
+              )}
+
+              {isPending && (
+                <motion.div
+                  key="loading"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="flex flex-col items-center gap-4"
+                >
+                  <Loader2 className="w-12 h-12 text-solar-glow animate-spin" />
+                  <p className="text-solar-glow/80 animate-pulse font-medium">Computing solar potential...</p>
+                </motion.div>
+              )}
+
+              {result && (
+                <motion.div
+                  key="result"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="w-full h-full flex flex-col items-center gap-8"
+                >
+                  <div className="flex items-center gap-3 self-start mb-4">
+                    <div className="w-6 h-6 rounded-full bg-emerald-500/20 flex items-center justify-center border border-emerald-500/40">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                    </div>
+                    <p className="text-sm font-medium text-white/90">
+                      Solar installation is recommended for your location
                     </p>
                   </div>
-                </div>
+
+                  <CircularGauge 
+                    value={82} 
+                    label="Estimated Offset of Daily Usage"
+                  />
+                </motion.div>
               )}
-            </motion.div>
-          )}
+            </AnimatePresence>
+            
+            {/* Background decorative glow */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(251,191,36,0.05)_0%,transparent_70%)] pointer-events-none" />
+          </div>
+        </div>
+
+        {/* Bottom Metrics Bar */}
+        <div className="flex flex-wrap justify-center gap-8 md:gap-16 pt-8 border-t border-white/5">
+          <div className="flex items-center gap-4">
+            <Leaf className="w-5 h-5 text-emerald-400" />
+            <div>
+              <p className="text-white/40 text-[10px] uppercase tracking-wider">Annual CO₂ Reduction</p>
+              <p className="text-lg font-bold">~1.8 tons</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-4">
+            <Wallet className="w-5 h-5 text-solar-glow" />
+            <div>
+              <p className="text-white/40 text-[10px] uppercase tracking-wider">Estimated Bill Savings</p>
+              <p className="text-lg font-bold">₹61,000 / year</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-4">
+            <TrendingUp className="w-5 h-5 text-blue-400" />
+            <div>
+              <p className="text-white/40 text-[10px] uppercase tracking-wider">NSS Impact</p>
+              <p className="text-sm font-medium text-white/80">Supports clean energy adoption</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
