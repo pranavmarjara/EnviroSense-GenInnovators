@@ -69,8 +69,8 @@ export default function Dashboard() {
       </motion.section>
 
       {/* Features Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 px-4">
-        <div className="lg:col-span-8">
+      <div className="grid grid-cols-1 gap-16 px-4">
+        <div className="w-full">
           <div className="mb-16">
             <span className="text-primary text-xs font-bold uppercase tracking-[0.4em] mb-6 block">FEATURES</span>
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-12">
@@ -103,15 +103,6 @@ export default function Dashboard() {
                 </Link>
               </motion.div>
             ))}
-          </div>
-        </div>
-
-        <div className="lg:col-span-4 flex flex-col gap-8">
-          <div className="bg-[#0a1a14] rounded-[3rem] p-10 border border-white/5 flex flex-col justify-center items-center text-center group cursor-pointer hover:bg-white/5 transition-all duration-500 hover:scale-[0.98]">
-            <div className="w-20 h-20 rounded-full bg-white/5 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform border border-white/10">
-              <ArrowRight className="w-10 h-10 text-white/30 group-hover:text-primary transition-colors" />
-            </div>
-            <p className="text-white/60 text-lg font-bold tracking-tight">Explore more stories</p>
           </div>
         </div>
       </div>
