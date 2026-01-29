@@ -30,6 +30,8 @@ const CARDS = [
 export default function Dashboard() {
   return (
     <div className="w-full h-full space-y-12">
+      {/* Preload Hero Image */}
+      <link rel="preload" as="image" href="/images/hero-nature.png" />
       {/* Hero Section */}
       <motion.section 
         initial={{ opacity: 0, y: 20 }}

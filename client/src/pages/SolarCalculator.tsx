@@ -131,7 +131,7 @@ export default function SolarCalculator() {
                   <div className="bg-card p-6 rounded-2xl border border-border shadow-sm text-center">
                     <p className="text-muted-foreground text-sm font-medium uppercase tracking-wider">Est. Annual Savings</p>
                     <p className="text-4xl font-display font-bold text-emerald-600 mt-2">
-                      ${Math.floor(result.panels * 120)}
+                      ₹{Math.floor(result.panels * 120 * 83)}
                     </p>
                   </div>
                 </div>
