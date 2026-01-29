@@ -1,0 +1,128 @@
+You are building EnviroSense, a location-based environmental awareness and sustainability web application.
+
+Tech Constraints
+
+Platform: Replit
+
+Language: TypeScript
+
+Frontend only (no backend required)
+
+Use simple mock data and placeholder logic
+
+Clean, modular, readable code
+
+Focus on UI structure and logical flow, not real APIs
+
+Application Requirements
+1. AQI by ZIP Code (Top Right Widget)
+
+A small floating widget fixed at the top-right corner
+
+User enters a ZIP / PIN code
+
+Display:
+
+AQI value (mocked)
+
+AQI category (Good / Moderate / Poor)
+
+Color-coded indicator (green / yellow / red)
+
+This widget must stay visible across the app
+
+2. Smart Plant & Herb Recommendation System
+
+User inputs:
+
+Location (ZIP code)
+
+Weather preference (hot / moderate / cold)
+
+Optional: disease or health condition
+
+Output:
+
+If disease is entered → recommend medicinal herbs
+
+If no disease → recommend basic healthy herbs
+
+Also recommend environment-suitable plants
+
+For each plant/herb, show:
+
+Watering frequency
+
+Sunlight requirement
+
+Care level:
+
+Low (busy individuals)
+
+Medium
+
+High
+
+Categorize plants clearly using cards or sections
+
+3. Solar Worth Calculator
+
+Inputs:
+
+Location (ZIP code)
+
+Daily electricity load (kWh)
+
+Logic (mocked):
+
+Consider sunlight availability
+
+Consider air quality impact
+
+Output:
+
+Whether installing solar panels is worth it or not
+
+If yes:
+
+Suggested number of solar panels
+
+Estimated benefit summary
+
+Display results clearly with icons or badges
+
+4. Urban Heat & Greenery Heat Map (Conceptual)
+
+Section explaining:
+
+Areas with low greenery → higher temperatures
+
+Increased AC and air purifier usage
+
+Show:
+
+A simple conceptual heat map grid
+
+Green = high greenery
+
+Red = heat-prone zones
+
+Emphasize environmental awareness over accuracy
+
+5. Brand Sustainability Score (Impact Feature)
+
+Input:
+
+Brand name (dropdown or text input)
+
+Output:
+
+Sustainability score (0–100)
+
+Packaging impact level
+
+Eco-friendliness rating (Low / Medium / High)
+
+Use mocked brand data
+
+Present as a highlight feature with strong visual emphasis
