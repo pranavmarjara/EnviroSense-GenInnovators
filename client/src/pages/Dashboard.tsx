@@ -83,20 +83,21 @@ export default function Dashboard() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
             {CARDS.map((card, index) => (
               <motion.div
                 key={card.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 + index * 0.1 }}
+                className="flex"
               >
-                <Link href={card.href} className="group block h-full p-10 rounded-[2.5rem] bg-white/5 border border-white/5 hover:bg-white/10 transition-all duration-500 hover:-translate-y-2">
-                  <span className="text-primary font-display text-2xl font-bold mb-8 block">{card.id}</span>
-                  <h3 className="text-2xl font-display font-bold text-white mb-4 group-hover:text-primary transition-colors">
+                <Link href={card.href} className="group block w-full p-6 md:p-8 lg:p-10 rounded-[2rem] md:rounded-[2.5rem] bg-white/5 border border-white/5 hover:bg-white/10 transition-all duration-500 hover:-translate-y-2">
+                  <span className="text-primary font-display text-xl md:text-2xl font-bold mb-4 md:mb-8 block">{card.id}</span>
+                  <h3 className="text-xl md:text-2xl font-display font-bold text-white mb-2 md:mb-4 group-hover:text-primary transition-colors">
                     {card.title}
                   </h3>
-                  <p className="text-white/40 text-base leading-relaxed">
+                  <p className="text-white/40 text-sm md:text-base leading-relaxed">
                     {card.description}
                   </p>
                 </Link>
