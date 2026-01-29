@@ -85,9 +85,7 @@ export function Sidebar() {
             <Leaf className="w-6 h-6 text-solar-glow" />
           </div>
           {!isCollapsed && (
-            <span className="text-xl font-display font-bold text-white tracking-tight solar-glow-text">
-              ZUBOX
-            </span>
+            <span className="text-xl font-display font-bold text-white tracking-tight solar-glow-text">EnviroSense</span>
           )}
         </div>
         {!isCollapsed && (
