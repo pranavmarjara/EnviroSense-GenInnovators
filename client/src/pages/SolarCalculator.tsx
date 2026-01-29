@@ -276,13 +276,6 @@ export default function SolarCalculator() {
               <p className="text-lg font-bold">₹61,000 / year</p>
             </div>
           </div>
-          <div className="flex items-center gap-4">
-            <TrendingUp className="w-5 h-5 text-blue-400" />
-            <div>
-              <p className="text-white/40 text-[10px] uppercase tracking-wider">NSS Impact</p>
-              <p className="text-sm font-medium text-white/80">Supports clean energy adoption</p>
-            </div>
-          </div>
         </div>
       </div>
     </div>
