@@ -179,11 +179,15 @@ export default function SolarCalculator() {
                 <Button 
                   type="submit" 
                   disabled={isPending}
-                  className="w-full h-14 rounded-xl bg-gradient-to-r from-solar-glow to-amber-500 hover:from-amber-500 hover:to-solar-glow text-black font-bold text-lg shadow-[0_0_20px_rgba(251,191,36,0.3)] transition-all duration-500"
+                  className="w-full h-14 rounded-xl bg-gradient-to-r from-solar-glow to-amber-500 hover:from-amber-500 hover:to-solar-glow text-black font-bold text-lg shadow-[0_0_20px_rgba(251,191,36,0.3)] transition-all duration-500 group overflow-hidden relative"
                 >
                   {isPending ? (
                     <Loader2 className="w-6 h-6 animate-spin" />
-                  ) : "Analyze Solar Feasibility"}
+                  ) : (
+                    <span className="inline-block transition-all duration-300 transform group-hover:scale-95 whitespace-nowrap overflow-hidden text-ellipsis px-2 max-w-full text-[clamp(0.75rem,2.5cqi,1.125rem)]">
+                      Analyze Solar Feasibility
+                    </span>
+                  )}
                 </Button>
               </form>
             </Form>
